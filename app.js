@@ -11,7 +11,7 @@ app.use(express.static("public"));
 //PROMISES
 function getUsers() {
   return new Promise((resolve, reject) => {
-    fs.readFile("data.json", "utf-8", (error, data) => {
+    fs.readFile("data.json", "utf-8", (err, data) => {
       if (err) {
         reject(err);
       } else {
@@ -25,9 +25,12 @@ function getUsers() {
 app.get("/", (req, res) => {
   getUsers()
     .then((users) => {
+      // throw new Error("Nooooooooo!");
       res.render("index", { title: "Users", users: users.users });
     })
-    .catch();
+    .catch((err) => {
+      res.render("error", { error: err });
+    });
 });
 // CALL BACKS
 // function getUsers(cb) {
@@ -47,5 +50,18 @@ app.get("/", (req, res) => {
 //     }
 //   });
 // });
+
+// app.get('/:id', (req, res) => {
+//   getUser(req.params.id)
+//     .then((user)=>{
+//       return getFollowers(user);
+//     })
+//     .then((user, followers)=>{
+//       res.render('profile', {title: "Profile Page", users: user, followers: followers});
+//     })
+//     .catch((err) => {
+//       res.render('error', {error: err});
+//     });
+//  });
 
 app.listen(3000, () => console.log("App listening on port 3000!"));
