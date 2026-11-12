@@ -33,6 +33,7 @@ app.get("/", (req, res) => {
     });
 });
 // CALL BACKS
+//examples
 // function getUsers(cb) {
 //   fs.readFile("data.json", "utf8", (err, data) => {
 //     if (err) return cb(err);
